@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environments.prod';
 
 export interface Book {
   id?: number | null;
@@ -30,9 +31,9 @@ export interface Emprunt {
 })
 export class BookService {
 
-  private readonly api = '${environment.apiUrl}/api/books';
-  private readonly usersApi = '${environment.apiUrl}/api/users';
-  private readonly empruntApi = '${environment.apiUrl}/api/emprunts';
+  private readonly api = `${environment.apiUrl}/api/books`;
+  private readonly usersApi = `${environment.apiUrl}/api/users`;
+  private readonly empruntApi = `${environment.apiUrl}/api/emprunts`;
 
   constructor(private http: HttpClient) {}
 

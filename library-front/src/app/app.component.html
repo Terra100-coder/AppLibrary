@@ -1,14 +1,27 @@
-<nav class="app-nav">
-  <a class="brand" routerLink="/dashboard">
+<nav class="app-nav" [class.menu-open]="isNavOpen">
+  <a class="brand" routerLink="/dashboard" (click)="closeNav()">
     <span class="brand-icon pi pi-book"></span>
-    <span>Library App</span>
+    <span>BibTèque</span>
   </a>
 
-  <div class="nav-links">
-    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
-    <a routerLink="/books" routerLinkActive="active">Livres</a>
-    <a routerLink="/users" routerLinkActive="active">Utilisateurs</a>
-    <a routerLink="/emprunts" routerLinkActive="active">Emprunts</a>
+  <button
+    class="nav-toggle"
+    type="button"
+    [attr.aria-label]="isNavOpen ? 'Fermer le menu' : 'Ouvrir le menu'"
+    [attr.aria-expanded]="isNavOpen"
+    aria-controls="primary-navigation"
+    (click)="toggleNav()"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="nav-links" id="primary-navigation">
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="closeNav()">Dashboard</a>
+    <a routerLink="/books" routerLinkActive="active" (click)="closeNav()">Livres</a>
+    <a routerLink="/users" routerLinkActive="active" (click)="closeNav()">Utilisateurs</a>
+    <a routerLink="/emprunts" routerLinkActive="active" (click)="closeNav()">Emprunts</a>
   </div>
 </nav>
 

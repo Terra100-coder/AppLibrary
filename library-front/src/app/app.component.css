@@ -7,7 +7,7 @@
   gap: 1rem;
   justify-content: space-between;
   min-height: 72px;
-  padding: 0 2rem;
+  padding: 0 clamp(1rem, 4vw, 2rem);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -47,6 +47,7 @@
   font-weight: 600;
   padding: .65rem .85rem;
   text-decoration: none;
+  transition: background .2s ease, color .2s ease;
 }
 
 .nav-links a.active,
@@ -55,20 +56,111 @@
   color: #3730a3;
 }
 
+.nav-toggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  height: 42px;
+  justify-content: center;
+  padding: 0;
+  width: 42px;
+}
+
+.nav-toggle span {
+  background: #111827;
+  border-radius: 999px;
+  display: block;
+  height: 2px;
+  transition: transform .2s ease, opacity .2s ease;
+  width: 22px;
+}
+
 .app-shell {
   margin: 0 auto;
   max-width: 1180px;
-  padding: 2rem;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+@media (max-width: 900px) {
+  .brand {
+    font-size: 1rem;
+  }
+
+  .nav-links a {
+    padding: .6rem .7rem;
+  }
 }
 
 @media (max-width: 720px) {
   .app-nav {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 1rem;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    min-height: 64px;
+    padding-bottom: .7rem;
+    padding-top: .7rem;
   }
 
-  .app-shell {
-    padding: 1rem;
+  .brand {
+    min-width: 0;
+  }
+
+  .brand span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+  }
+
+  .app-nav.menu-open .nav-toggle span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .app-nav.menu-open .nav-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .app-nav.menu-open .nav-toggle span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav-links {
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    display: grid;
+    gap: .35rem;
+    grid-column: 1 / -1;
+    justify-content: stretch;
+    margin: 0 -.25rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 .25rem;
+    pointer-events: none;
+    transition: max-height .25s ease, opacity .2s ease, padding .2s ease, margin .2s ease;
+  }
+
+  .app-nav.menu-open .nav-links {
+    margin-top: .75rem;
+    max-height: 18rem;
+    opacity: 1;
+    padding-top: .75rem;
+    pointer-events: auto;
+  }
+
+  .nav-links a {
+    align-items: center;
+    display: flex;
+    min-height: 44px;
+    padding: .75rem .9rem;
+    width: 100%;
   }
 }

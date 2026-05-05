@@ -1,0 +1,17 @@
+<nav class="app-nav">
+  <a class="brand" routerLink="/dashboard">
+    <span class="brand-icon pi pi-book"></span>
+    <span>Library App</span>
+  </a>
+
+  <div class="nav-links">
+    <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+    <a routerLink="/books" routerLinkActive="active">Livres</a>
+    <a routerLink="/users" routerLinkActive="active">Utilisateurs</a>
+    <a routerLink="/emprunts" routerLinkActive="active">Emprunts</a>
+  </div>
+</nav>
+
+<main class="app-shell">
+  <router-outlet></router-outlet>
+</main>

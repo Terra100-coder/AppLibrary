@@ -1,0 +1,79 @@
+<section>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Utilisateurs</h1>
+      <p class="page-subtitle">Créez, recherchez et mettez à jour les lecteurs de la bibliothèque.</p>
+    </div>
+    <button pButton label="Nouvel utilisateur" icon="pi pi-plus" severity="success" (click)="openAdd()"></button>
+  </div>
+
+  <div class="panel">
+    <div class="toolbar">
+      <span class="p-input-icon-left search-field">
+        <i class="pi pi-search"></i>
+        <input pInputText class="w-100" [(ngModel)]="searchText" (input)="searchUsers()" placeholder="Rechercher un utilisateur">
+      </span>
+      <span class="text-muted">{{ filteredUsers.length }} utilisateur(s)</span>
+    </div>
+
+    <p-table
+      [value]="filteredUsers"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="8"
+      responsiveLayout="scroll"
+      styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-user>
+        <tr>
+          <td>{{ user.nom }}</td>
+          <td>{{ user.prenom }}</td>
+          <td>{{ user.email }}</td>
+          <td class="text-end">
+            <button pButton icon="pi pi-pencil" severity="warning" rounded text aria-label="Modifier" (click)="editUser(user)"></button>
+            <button pButton icon="pi pi-trash" severity="danger" rounded text aria-label="Supprimer" (click)="deleteUser(user.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="empty-state">Aucun utilisateur trouvé.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    [header]="isEditMode ? 'Modifier un utilisateur' : 'Nouvel utilisateur'"
+    [(visible)]="showForm"
+    [modal]="true"
+    [style]="{ width: '520px' }"
+    [draggable]="false">
+    <div class="form-grid">
+      <div class="field">
+        <label for="nom">Nom</label>
+        <input id="nom" pInputText [(ngModel)]="selectedUser.nom">
+      </div>
+      <div class="field">
+        <label for="prenom">Prénom</label>
+        <input id="prenom" pInputText [(ngModel)]="selectedUser.prenom">
+      </div>
+      <div class="field" style="grid-column: 1 / -1;">
+        <label for="email">Email</label>
+        <input id="email" pInputText type="email" [(ngModel)]="selectedUser.email">
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button pButton label="Annuler" icon="pi pi-times" severity="secondary" outlined (click)="closeForm()"></button>
+      <button pButton label="Enregistrer" icon="pi pi-check" (click)="saveUser()"></button>
+    </div>
+  </p-dialog>
+</section>

@@ -1,0 +1,74 @@
+
+.app-nav {
+  align-items: center;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  min-height: 72px;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  align-items: center;
+  color: #111827;
+  display: inline-flex;
+  font-size: 1.15rem;
+  font-weight: 700;
+  gap: .65rem;
+  text-decoration: none;
+}
+
+.brand-icon {
+  align-items: center;
+  background: #0f766e;
+  border-radius: 8px;
+  color: #ffffff;
+  display: inline-flex;
+  height: 2.25rem;
+  justify-content: center;
+  width: 2.25rem;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  justify-content: flex-end;
+}
+
+.nav-links a {
+  border-radius: 8px;
+  color: #4b5563;
+  font-weight: 600;
+  padding: .65rem .85rem;
+  text-decoration: none;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.app-shell {
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 2rem;
+}
+
+@media (max-width: 720px) {
+  .app-nav {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .app-shell {
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,116 @@
+<section>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Livres</h1>
+    </div>
+    <button pButton label="Nouveau livre" icon="pi pi-plus" severity="success" (click)="openAdd()"></button>
+  </div>
+
+  <div class="panel">
+    <div class="toolbar">
+      <span class="p-input-icon-left search-field">
+        <i class="pi pi-search"></i>
+        <input pInputText class="w-100" [(ngModel)]="searchText" (input)="searchBooks()" placeholder="Rechercher un livre">
+      </span>
+      <span class="text-muted">{{ filteredBooks.length }} livre(s)</span>
+    </div>
+
+    <p-table
+      [value]="filteredBooks"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="8"
+      responsiveLayout="scroll"
+      styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Titre</th>
+          <th>Auteur</th>
+          <th>Catégorie</th>
+          <th>Quantité</th>
+          <th>Année</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr>
+          <td>{{ book.titre }}</td>
+          <td>{{ book.auteur }}</td>
+          <td>{{ book.category }}</td>
+          <td>{{ book.quantite }}</td>
+          <td>{{ book.anneePublication }}</td>
+          <td class="text-end">
+            <button pButton icon="pi pi-book" severity="info" rounded text aria-label="Emprunter" (click)="openEmprunt(book)"></button>
+            <button pButton icon="pi pi-pencil" severity="warning" rounded text aria-label="Modifier" (click)="editBook(book)"></button>
+            <button pButton icon="pi pi-trash" severity="danger" rounded text aria-label="Supprimer" (click)="deleteBook(book.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="empty-state">Aucun livre trouvé.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    [header]="isEditMode ? 'Modifier un livre' : 'Nouveau livre'"
+    [(visible)]="showForm"
+    [modal]="true"
+    [style]="{ width: '620px' }"
+    [draggable]="false">
+    <div class="form-grid">
+      <div class="field">
+        <label for="titre">Titre</label>
+        <input id="titre" pInputText [(ngModel)]="selectedBook.titre">
+      </div>
+      <div class="field">
+        <label for="auteur">Auteur</label>
+        <input id="auteur" pInputText [(ngModel)]="selectedBook.auteur">
+      </div>
+      <div class="field">
+        <label for="category">Catégorie</label>
+        <input id="category" pInputText [(ngModel)]="selectedBook.category">
+      </div>
+      <div class="field">
+        <label for="annee">Année</label>
+        <p-inputNumber inputId="annee" [(ngModel)]="selectedBook.anneePublication" [useGrouping]="false" styleClass="w-100"></p-inputNumber>
+      </div>
+      <div class="field">
+        <label for="quantite">Quantité</label>
+        <p-inputNumber inputId="quantite" [(ngModel)]="selectedBook.quantite" [min]="0" styleClass="w-100"></p-inputNumber>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button pButton label="Annuler" icon="pi pi-times" severity="secondary" outlined (click)="closeForm()"></button>
+      <button pButton label="Enregistrer" icon="pi pi-check" (click)="saveBook()"></button>
+    </div>
+  </p-dialog>
+
+  <p-dialog
+    header="Emprunter un livre"
+    [(visible)]="showEmpruntDialog"
+    [modal]="true"
+    [style]="{ width: '460px' }"
+    [draggable]="false">
+    <div class="field">
+      <label for="selectedUser">Utilisateur</label>
+      <p-dropdown
+        inputId="selectedUser"
+        [options]="userOptions"
+        [(ngModel)]="selectedUserId"
+        placeholder="Choisir un utilisateur"
+        styleClass="w-100">
+      </p-dropdown>
+    </div>
+
+    <div class="dialog-actions">
+      <button pButton label="Annuler" icon="pi pi-times" severity="secondary" outlined (click)="showEmpruntDialog = false"></button>
+      <button pButton label="Confirmer" icon="pi pi-check" severity="success" (click)="confirmEmprunt()"></button>
+    </div>
+  </p-dialog>
+</section>
+
+

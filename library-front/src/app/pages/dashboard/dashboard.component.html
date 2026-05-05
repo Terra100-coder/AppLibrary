@@ -1,0 +1,107 @@
+<section class="dashboard-page">
+  <div class="dashboard-header">
+    <div>
+      <h1>Tableau de bord</h1>
+      <p>Vue d'ensemble du catalogue, des lecteurs et des emprunts.</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <article class="stat-card card-green">
+      <div class="stat-head">
+        <span class="stat-icon pi pi-book"></span>
+        <span class="stat-label">Catalogue</span>
+      </div>
+      <strong>{{ totalBooks }}</strong>
+      <p>Total livres</p>
+      <small>{{ totalStock }} exemplaire(s) en stock</small>
+    </article>
+
+    <article class="stat-card card-indigo">
+      <div class="stat-head">
+        <span class="stat-icon pi pi-users"></span>
+        <span class="stat-label">Lecteurs</span>
+      </div>
+      <strong>{{ totalUsers }}</strong>
+      <p>Utilisateurs</p>
+      <small>lecteurs enregistrés</small>
+    </article>
+
+    <article class="stat-card card-amber">
+      <div class="stat-head">
+        <span class="stat-icon pi pi-arrow-right-arrow-left"></span>
+        <span class="stat-label">Historique</span>
+      </div>
+      <strong>{{ totalEmprunts }}</strong>
+      <p>Total emprunts</p>
+      <small>opérations enregistrées</small>
+    </article>
+
+    <article class="stat-card card-blue">
+      <div class="stat-head">
+        <span class="stat-icon pi pi-clock"></span>
+        <span class="stat-label">En cours</span>
+      </div>
+      <strong>{{ empruntsActifs }}</strong>
+      <p>Emprunts actifs</p>
+      <small>{{ activeRate }}% des emprunts</small>
+      <div class="progress-line">
+        <span [style.width.%]="activeRate"></span>
+      </div>
+    </article>
+  </div>
+
+  <div class="stats-panels">
+    <div class="panel stat-panel">
+      <div class="panel-title">
+        <span class="pi pi-chart-bar"></span>
+        <h2>Livres les plus empruntés</h2>
+      </div>
+      <p-table [value]="booksStats" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Livre</th>
+            <th class="text-end">Emprunts</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-stat>
+          <tr>
+            <td>{{ stat.label }}</td>
+            <td class="text-end"><p-tag severity="info" [value]="stat.value.toString()"></p-tag></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="2" class="empty-state">Aucune statistique disponible.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="panel stat-panel">
+      <div class="panel-title">
+        <span class="pi pi-star"></span>
+        <h2>Utilisateurs les plus actifs</h2>
+      </div>
+      <p-table [value]="usersStats" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Utilisateur</th>
+            <th class="text-end">Emprunts</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-stat>
+          <tr>
+            <td>{{ stat.label }}</td>
+            <td class="text-end"><p-tag severity="success" [value]="stat.value.toString()"></p-tag></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="2" class="empty-state">Aucune statistique disponible.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</section>

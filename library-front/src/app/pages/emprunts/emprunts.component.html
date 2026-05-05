@@ -1,0 +1,104 @@
+<section>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Emprunts</h1>
+      <p class="page-subtitle">Enregistrez les sorties de livres et confirmez les retours.</p>
+    </div>
+    <button pButton label="Nouvel emprunt" icon="pi pi-plus" severity="success" (click)="openAdd()"></button>
+  </div>
+
+  <div class="panel">
+    <p-table
+      [value]="emprunts"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="8"
+      responsiveLayout="scroll"
+      styleClass="p-datatable-striped">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Livre</th>
+          <th>Utilisateur</th>
+          <th>Date emprunt</th>
+          <th>Date retour</th>
+          <th>Statut</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-emprunt>
+        <tr>
+          <td>{{ getBookTitle(emprunt.bookId) }}</td>
+          <td>{{ getUserName(emprunt.userId) }}</td>
+          <td>{{ emprunt.dateEmprunt }}</td>
+          <td>{{ emprunt.dateRetour || '-' }}</td>
+          <td>
+            <p-tag
+              [severity]="emprunt.dateRetour ? 'success' : 'warning'"
+              [value]="emprunt.dateRetour ? 'Retourné' : 'En cours'">
+            </p-tag>
+          </td>
+          <td class="text-end">
+            <button
+              pButton
+              icon="pi pi-undo"
+              severity="info"
+              rounded
+              text
+              aria-label="Retourner"
+              [disabled]="!!emprunt.dateRetour"
+              (click)="returnBook(emprunt.id)">
+            </button>
+            <button
+              pButton
+              icon="pi pi-trash"
+              severity="danger"
+              rounded
+              text
+              aria-label="Supprimer"
+              (click)="deleteEmprunt(emprunt.id)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6" class="empty-state">Aucun emprunt enregistré.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    header="Nouvel emprunt"
+    [(visible)]="showForm"
+    [modal]="true"
+    [style]="{ width: '520px' }"
+    [draggable]="false">
+    <div class="field mb-3">
+      <label for="bookId">Livre</label>
+      <p-dropdown
+        inputId="bookId"
+        [options]="bookOptions"
+        [(ngModel)]="formData.bookId"
+        placeholder="Choisir un livre"
+        styleClass="w-100">
+      </p-dropdown>
+    </div>
+
+    <div class="field">
+      <label for="userId">Utilisateur</label>
+      <p-dropdown
+        inputId="userId"
+        [options]="userOptions"
+        [(ngModel)]="formData.userId"
+        placeholder="Choisir un utilisateur"
+        styleClass="w-100">
+      </p-dropdown>
+    </div>
+
+    <div class="dialog-actions">
+      <button pButton label="Annuler" icon="pi pi-times" severity="secondary" outlined (click)="closeForm()"></button>
+      <button pButton label="Confirmer" icon="pi pi-check" severity="success" (click)="createEmprunt()"></button>
+    </div>
+  </p-dialog>
+</section>

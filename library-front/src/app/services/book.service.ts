@@ -30,9 +30,9 @@ export interface Emprunt {
 })
 export class BookService {
 
-  private readonly api = '/api/books';
-  private readonly usersApi = '/api/users';
-  private readonly empruntApi = '/api/emprunts';
+  private readonly api = '${environment.apiUrl}/api/books';
+  private readonly usersApi = '${environment.apiUrl}/api/users';
+  private readonly empruntApi = '${environment.apiUrl}/api/emprunts';
 
   constructor(private http: HttpClient) {}
 
